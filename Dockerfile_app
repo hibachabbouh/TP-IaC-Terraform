@@ -1,0 +1,8 @@
+FROM nginx:alpine
+
+# Keep a simple, parser-safe Dockerfile for Terraform Docker provider.
+RUN printf '%s\n' '<h1>Application Web - TP DevOps</h1>' > /usr/share/nginx/html/index.html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

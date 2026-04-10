@@ -1,0 +1,5 @@
+# Fichiers d'état Terraform (contiennent des données sensibles)
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
