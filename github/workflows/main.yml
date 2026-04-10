@@ -1,0 +1,34 @@
+name: IaC Terraform CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: Terraform Deployment
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout du code source
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # 2. Setup de Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ">=1.0"
+
+      # 3. Initialisation
+      - name: Terraform Init
+        run: terraform init
+
+      # 4. Planification (gate de validation)
+      - name: Terraform Plan
+        run: terraform plan
+
+      # 5. Application (uniquement si Plan réussit)
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
