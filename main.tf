@@ -9,9 +9,7 @@ terraform {
 }
 
 provider "docker" {
-  # Utiliser le socket Windows Named Pipe pour s'assurer que Terraform
-  # interagit avec le même démon Docker que la CLI sous Windows.
-  host = "npipe:////./pipe/docker_engine"
+  host = "unix:///var/run/docker.sock"
 }
 
 # --- 1. Ressource : Base de Données PostgreSQL ---

@@ -16,9 +16,9 @@ jobs:
 
       - name: Start Docker daemon
         run: |
-          sudo systemctl start docker
+          sudo systemctl start docker || true
           sudo chmod 666 /var/run/docker.sock
-          docker version
+          docker info
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
