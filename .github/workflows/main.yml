@@ -11,24 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout du code source
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2. Setup de Terraform
+      - name: Start Docker daemon
+        run: |
+          sudo systemctl start docker
+          sudo chmod 666 /var/run/docker.sock
+          docker version
+
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ">=1.0"
 
-      # 3. Initialisation
       - name: Terraform Init
         run: terraform init
 
-      # 4. Planification (gate de validation)
       - name: Terraform Plan
         run: terraform plan
 
-      # 5. Application (uniquement si Plan réussit)
       - name: Terraform Apply
         run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: always()
+        run: terraform destroy -auto-approve
